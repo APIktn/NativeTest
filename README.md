@@ -1,6 +1,7 @@
 tech stack
 //////////////////////////////////////////////////
 client
+ npm run android
 
 npx create-expo-app client
 npx expo install expo-secure-store
