@@ -1,15 +1,93 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+model User {
+  Id              Int      @id @default(autoincrement())
+  UserCode        String   @unique @db.VarChar(20)
+  UserName        String?  @db.VarChar(150)
+  UserEmail       String   @db.VarChar(150)
+  Password        String   @db.VarChar(150)
+  FirstName       String   @db.VarChar(150)
+  LastName        String   @db.VarChar(150)
+  Address         String?  @db.Text
+  Tel             String?  @db.VarChar(20)
+  Profile_Image   String   @db.Text
+  Upload_Image    String?  @db.Text
+  CreateBy        String   @db.VarChar(20)
+  CreateDateTime  DateTime @db.DateTime(0)
+  UpdateBy        String   @db.VarChar(20)
+  UpdateDateTime  DateTime @db.DateTime(0)
+  TokenVersion    Int      @default(0)
+  Upload_Image_Id String?  @db.Text
+  token           token[]
+
+  @@map("tbl_mas_users")
+}
+
+model ProductHeader {
+  Id             Int            @id @default(autoincrement())
+  ProductCode    String         @unique @db.VarChar(150)
+  ProductName    String         @db.VarChar(255)
+  ProductDes     String         @db.Text
+  CreateBy       String         @db.VarChar(20)
+  CreateDateTime DateTime       @db.DateTime(0)
+  UpdateBy       String         @db.VarChar(20)
+  UpdateDateTime DateTime       @db.DateTime(0)
+  images         ProductImage[]
+  lines          ProductLine[]
+
+  @@map("tbl_trs_product_header")
+}
+
+model ProductImage {
+  Id             Int           @id @default(autoincrement())
+  IdRef          Int
+  ImageType      String        @db.VarChar(50)
+  ProductImage   String        @db.Text
+  ProductImageId String?       @db.Text
+  CreateBy       String        @db.VarChar(20)
+  CreateDateTime DateTime      @db.Date
+  UpdateBy       String        @db.VarChar(20)
+  UpdateDateTime DateTime      @db.Date
+  header         ProductHeader @relation(fields: [IdRef], references: [Id], onDelete: Cascade)
+
+  @@index([IdRef], map: "tbl_trs_product_image_IdRef_fkey")
+  @@map("tbl_trs_product_image")
+}
+
+model ProductLine {
+  Id             Int           @id @default(autoincrement())
+  IdRef          Int
+  LineNo         Int
+  Size           String        @db.VarChar(150)
+  Price          Decimal       @db.Decimal(10, 2)
+  Amount         Int
+  Note           String?       @db.Text
+  CreateBy       String        @db.VarChar(20)
+  CreateDateTime DateTime      @db.DateTime(0)
+  UpdateBy       String        @db.VarChar(20)
+  UpdateDateTime DateTime      @db.DateTime(0)
+  header         ProductHeader @relation(fields: [IdRef], references: [Id], onDelete: Cascade)
+
+  @@index([IdRef], map: "tbl_trs_product_line_IdRef_fkey")
+  @@map("tbl_trs_product_line")
+}
+
+model token {
+  Id            Int      @id @default(autoincrement())
+  UserId        Int
+  TokenHash     String   @db.VarChar(255)
+  ExpiresAt     DateTime @db.DateTime(0)
+  AbsoluteExp   DateTime @db.DateTime(0)
+  CreateBy      String   @db.VarChar(20)
+  CreatedAt     DateTime @default(now())
+  tbl_mas_users User     @relation(fields: [UserId], references: [Id], onDelete: Cascade, map: "Token_UserId_fkey")
+
+  @@index([UserId], map: "Token_UserId_idx")
 }
