@@ -1,10 +1,12 @@
 tech stack
 //////////////////////////////////////////////////
 client
- npm run android
+npx expo start
 
 npx create-expo-app client
 npx expo install expo-secure-store
+npx expo install expo-av
+npx expo install @expo/vector-icons
 npm install axios
 npm install --save-dev react-test-renderer@19.1.0
 npm install --save-dev @testing-library/react-native@13.2.0
@@ -36,3 +38,8 @@ nest g controller test
 
 npx prisma migrate dev --name init
 npx prisma migrate deploy
+
+//////////////////////////////////////////////////
+note
+
+https://icons.expo.fyi/Index
