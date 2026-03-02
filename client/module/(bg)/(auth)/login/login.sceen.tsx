@@ -81,14 +81,14 @@ export default function LoginScreen() {
             style={[styles.input, !!errors.username && styles.inputError]}
             value={form.username}
             onChangeText={setField('username')}
-            placeholder="john@example.com"
+            placeholder="email or username"
           />
 
           <TextInput
             style={[styles.input, !!errors.password && styles.inputError]}
             value={form.password}
             onChangeText={setField('password')}
-            placeholder="••••••••"
+            placeholder="password"
             secureTextEntry
           />
 
@@ -106,6 +106,11 @@ export default function LoginScreen() {
               No account? Sign up
             </Text>
           </Pressable>
+
+          <GlassButton
+            title="back to home"
+            onPress={() => router.replace('/' as Href)}
+          />
         </View>
       </ScrollView>
     </KeyboardAvoidingView>

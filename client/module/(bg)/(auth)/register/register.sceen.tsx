@@ -152,7 +152,7 @@ export default function RegisterScreen() {
             value={form.firstName}
             onChangeText={setField("firstName")}
             error={errors.firstName}
-            placeholder="John"
+            placeholder="first name"
             autoCapitalize="words"
           />
 
@@ -161,7 +161,7 @@ export default function RegisterScreen() {
             value={form.lastName}
             onChangeText={setField("lastName")}
             error={errors.lastName}
-            placeholder="Doe"
+            placeholder="last name"
             autoCapitalize="words"
           />
 
@@ -170,7 +170,7 @@ export default function RegisterScreen() {
             value={form.userEmail}
             onChangeText={setField("userEmail")}
             error={errors.userEmail}
-            placeholder="john@example.com"
+            placeholder="email"
             keyboardType="email-address"
           />
 
@@ -196,6 +196,11 @@ export default function RegisterScreen() {
               <Text style={styles.linkHighlight}>Login here</Text>
             </Text>
           </Pressable>
+
+          <GlassButton
+            title="back to home"
+            onPress={() => router.replace("/" as Href)}
+          />
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
