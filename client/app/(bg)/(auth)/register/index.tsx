@@ -1,0 +1,1 @@
+export { default } from '../../../../module/(bg)/(auth)/register/register.sceen'
